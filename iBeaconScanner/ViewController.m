@@ -54,11 +54,14 @@ NSArray *iBeacons; // 表示用
 
 - (void) centralManagerDidUpdateState:(CBCentralManager *)central
 {
-    [NSTimer scheduledTimerWithTimeInterval:2.0f
-                                     target:self
-                                   selector:@selector(update:)
-                                   userInfo:nil
-                                    repeats:YES];
+
+    if(central.state == CBCentralManagerStatePoweredOn) {
+        [NSTimer scheduledTimerWithTimeInterval:2.0f
+                                         target:self
+                                       selector:@selector(update:)
+                                       userInfo:nil
+                                        repeats:YES];
+    }
 }
 
 - (void)centralManager:(CBCentralManager *)central
@@ -68,6 +71,9 @@ NSArray *iBeacons; // 表示用
 {
 
     NSLog(@"didDiscoverPeripheral");
+    NSLog(@"%@", RSSI);
+    NSLog(@"%@", advertisementData);
+
 
     NSData *data = advertisementData[@"kCBAdvDataManufacturerData"];
     if(data== nil || data.length < 25){

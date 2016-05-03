@@ -8,9 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import <CoreBluetooth/CoreBluetooth.h>
-#import <CoreLocation/CoreLocation.h>
 
-@interface ViewController : NSViewController<CBCentralManagerDelegate,NSTableViewDelegate,NSTableViewDataSource,CLLocationManagerDelegate>
+@interface ViewController : NSViewController<CBCentralManagerDelegate,NSTableViewDelegate,NSTableViewDataSource>
 
 @property (nonatomic) CBCentralManager *centralManager;
 
