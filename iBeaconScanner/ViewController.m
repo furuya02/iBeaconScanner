@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "IBeaconManager.h"
 #import "IBeacon.h"
 
 
@@ -31,15 +30,15 @@ NSArray *iBeacons; // 表示用
     // スキャン停止
     [_centralManager stopScan];
 
-    // テンポラリを表示用にコピーする
+    // テンポラリを表示用に(ソートして)コピーする
     iBeacons = [iBeaconsTemporary sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
         IBeacon* first = a;
         IBeacon* second = b;
-        if(first.uuid == second.uuid){
+        if([first.uuid isEqualToString:second.uuid]){
             if(first.major == second.major){
-                return first.minor < second.minor;
+                return first.minor - second.minor;
             }
-            return first.major < second.major;
+            return first.major - second.major;
         }
         return [first.uuid compare:second.uuid];
     }];
@@ -55,14 +54,11 @@ NSArray *iBeacons; // 表示用
 
 - (void) centralManagerDidUpdateState:(CBCentralManager *)central
 {
-
-    NSTimer *tm = [NSTimer scheduledTimerWithTimeInterval:0.5f
-                                                   target:self
-                                                 selector:@selector(update:)
-                                                 userInfo:nil
-                                                  repeats:YES];
-
-
+    [NSTimer scheduledTimerWithTimeInterval:1.0f
+                                     target:self
+                                   selector:@selector(update:)
+                                   userInfo:nil
+                                    repeats:YES];
 }
 
 - (void)centralManager:(CBCentralManager *)central
@@ -77,7 +73,6 @@ NSArray *iBeacons; // 表示用
     if(data== nil || data.length < 25){
         return;
     }
-    //NSData *advData = [advertisementData objectForKey:@"kCBAdvDataManufacturerData"];
     NSRange magicRange = NSMakeRange(0, 4);
     NSRange uuidRange = NSMakeRange(4, 16);
     NSRange majorRange = NSMakeRange(20, 2);

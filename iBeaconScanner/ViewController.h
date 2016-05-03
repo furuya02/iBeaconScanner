@@ -9,7 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 #import <CoreLocation/CoreLocation.h>
-#import "IBeaconManager.h"
 
 @interface ViewController : NSViewController<CBCentralManagerDelegate,NSTableViewDelegate,NSTableViewDataSource,CLLocationManagerDelegate>
 
