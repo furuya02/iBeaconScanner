@@ -54,7 +54,7 @@ NSArray *iBeacons; // 表示用
 
 - (void) centralManagerDidUpdateState:(CBCentralManager *)central
 {
-    [NSTimer scheduledTimerWithTimeInterval:1.0f
+    [NSTimer scheduledTimerWithTimeInterval:2.0f
                                      target:self
                                    selector:@selector(update:)
                                    userInfo:nil
